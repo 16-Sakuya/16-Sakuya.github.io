@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>实验六：软件部署 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="实验目标 综合运用前面实验所学的各类工具 构建和模拟一个完整的网络环境 完整体验和实现Web静态站点从开发到部署的全过程 掌握自动化部署（CI&#x2F;CD）的基本概念与实践方法  准备工作：确保hexo博客正常运行和git配置![](..&#x2F;photo&#x2F;准备工作.png)  创建两个仓库，分别用于存放源码(不公开)、托管静态页面(公开)![](..&#x2F;photo&#x2F;两个仓库.png)  将本地项目关">
+<meta property="og:type" content="website">
+<meta property="og:title" content="实验六：软件部署">
+<meta property="og:url" content="http://example.com/photo/%E5%AE%9E%E9%AA%8C6-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="实验目标 综合运用前面实验所学的各类工具 构建和模拟一个完整的网络环境 完整体验和实现Web静态站点从开发到部署的全过程 掌握自动化部署（CI&#x2F;CD）的基本概念与实践方法  准备工作：确保hexo博客正常运行和git配置![](..&#x2F;photo&#x2F;准备工作.png)  创建两个仓库，分别用于存放源码(不公开)、托管静态页面(公开)![](..&#x2F;photo&#x2F;两个仓库.png)  将本地项目关">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/photo/%E5%85%B3%E8%81%94%E4%BB%93%E5%BA%93.png">
+<meta property="og:image" content="http://example.com/photo/%E6%8F%90%E4%BA%A4%E5%B9%B6%E6%8E%A8%E9%80%81.png">
+<meta property="og:image" content="http://example.com/photo/%E5%88%9B%E5%BB%BA%E5%B7%A5%E4%BD%9C%E6%B5%81.png">
+<meta property="og:image" content="http://example.com/photo/%E5%86%99%E5%85%A5%E5%B7%A5%E4%BD%9C%E6%B5%81.png">
+<meta property="og:image" content="http://example.com/photo/%E9%85%8D%E7%BD%AEnginx.png">
+<meta property="og:image" content="http://example.com/photo/%E5%86%99%E5%85%A5nginx.png">
+<meta property="og:image" content="http://example.com/photo/%E5%90%AF%E7%94%A8%E7%AB%99%E7%82%B9.png">
+<meta property="og:image" content="http://example.com/photo/%E6%9C%AC%E5%9C%B0%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6.png">
+<meta property="og:image" content="http://example.com/photo/%E5%90%8C%E6%AD%A5.png">
+<meta property="og:image" content="http://example.com/photo/%E9%83%A8%E7%BD%B2%E7%BB%93%E6%9E%9C.png">
+<meta property="article:published_time" content="2026-07-12T09:25:15.000Z">
+<meta property="article:modified_time" content="2026-07-12T11:53:07.788Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/photo/%E5%85%B3%E8%81%94%E4%BB%93%E5%BA%93.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/photo/%E5%AE%9E%E9%AA%8C6-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html" class="article-date">
+  <time class="dt-published" datetime="2026-07-12T09:25:15.000Z" itemprop="datePublished">2026-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      实验六：软件部署
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="实验目标"><a href="#实验目标" class="headerlink" title="实验目标"></a>实验目标</h2><ul>
+<li>综合运用前面实验所学的各类工具</li>
+<li>构建和模拟一个完整的网络环境</li>
+<li>完整体验和实现Web静态站点从开发到部署的全过程</li>
+<li>掌握自动化部署（CI&#x2F;CD）的基本概念与实践方法</li>
+</ul>
+<h2 id="准备工作：确保hexo博客正常运行和git配置"><a href="#准备工作：确保hexo博客正常运行和git配置" class="headerlink" title="准备工作：确保hexo博客正常运行和git配置"></a>准备工作：确保hexo博客正常运行和git配置</h2><pre><code>![](../photo/准备工作.png)
+</code></pre>
+<h2 id="创建两个仓库，分别用于存放源码-不公开-、托管静态页面-公开"><a href="#创建两个仓库，分别用于存放源码-不公开-、托管静态页面-公开" class="headerlink" title="创建两个仓库，分别用于存放源码(不公开)、托管静态页面(公开)"></a>创建两个仓库，分别用于存放源码(不公开)、托管静态页面(公开)</h2><pre><code>![](../photo/两个仓库.png)
+</code></pre>
+<h2 id="将本地项目关联到源码仓库"><a href="#将本地项目关联到源码仓库" class="headerlink" title="将本地项目关联到源码仓库"></a>将本地项目关联到源码仓库</h2><p>  <img src="/../photo/%E5%85%B3%E8%81%94%E4%BB%93%E5%BA%93.png"></p>
+<ul>
+<li>创建.gitignore文件，写入：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">node_modules/</span><br><span class="line">.DS_Store</span><br><span class="line">public/</span><br><span class="line">.deploy_git/</span><br></pre></td></tr></table></figure></li>
+<li>提交并推送<br><img src="/../photo/%E6%8F%90%E4%BA%A4%E5%B9%B6%E6%8E%A8%E9%80%81.png"><ul>
+<li>中间有一个错误是因为我忘记在GitHub建立仓库了</li>
+</ul>
+</li>
+</ul>
+<h2 id="配置GitHub-Actions"><a href="#配置GitHub-Actions" class="headerlink" title="配置GitHub Actions"></a>配置GitHub Actions</h2><ul>
+<li>在文件夹中创建：.github&#x2F;workflows&#x2F;deploy.yml<br>  <img src="/../photo/%E5%88%9B%E5%BB%BA%E5%B7%A5%E4%BD%9C%E6%B5%81.png"></li>
+<li>写入：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">name: Deploy to GitHub Pages</span><br><span class="line"></span><br><span class="line">on:</span><br><span class="line">  push:</span><br><span class="line">    branches: [main]</span><br><span class="line">  workflow_dispatch:</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  deploy:</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line">    steps:</span><br><span class="line">      - name: 检出源码</span><br><span class="line">        uses: actions/checkout@v3</span><br><span class="line">      </span><br><span class="line">      - name: 安装Node.js</span><br><span class="line">        uses: actions/setup-node@v3</span><br><span class="line">        with:</span><br><span class="line">          node-version: &#x27;20&#x27;</span><br><span class="line">        </span><br><span class="line">      - name: 缓存依赖</span><br><span class="line">        uses: actions/cache@v3</span><br><span class="line">        with:</span><br><span class="line">          path: ~/.npm</span><br><span class="line">          key: $&#123;&#123; runner.os &#125;&#125;-node-$&#123;&#123; hashFiles(&#x27;**/package-lock.json&#x27;) &#125;&#125;</span><br><span class="line">      </span><br><span class="line">      - name: 安装依赖</span><br><span class="line">        run: npm install</span><br><span class="line"></span><br><span class="line">      - name: 生成静态文件</span><br><span class="line">        run: npx hexo generate</span><br><span class="line">    </span><br><span class="line">      - name: 创建.nojekyll文件</span><br><span class="line">        run: echo &quot;&quot; &gt; public/.nojekyll</span><br><span class="line">    </span><br><span class="line">      - name: 部署到GitHub Pages</span><br><span class="line">        uses: peaceiris/actions-gh-pages@v3</span><br><span class="line">        with:</span><br><span class="line">          personal_token: $&#123;&#123; secrets.PERSONAL_TOKEN &#125;&#125;</span><br><span class="line">          publish_dir: ./public</span><br><span class="line">          publish_branch: main</span><br><span class="line">          external_repository: 用户名/用户名.github.io</span><br></pre></td></tr></table></figure>
+<ul>
+<li>为方便书写，可以在对应文件夹创建deploy.yml后直接用vscode打开写入<br><img src="/../photo/%E5%86%99%E5%85%A5%E5%B7%A5%E4%BD%9C%E6%B5%81.png"></li>
+</ul>
+</li>
+</ul>
+<h2 id="部署到云服务器（虚拟机，这里使用node1）"><a href="#部署到云服务器（虚拟机，这里使用node1）" class="headerlink" title="部署到云服务器（虚拟机，这里使用node1）"></a>部署到云服务器（虚拟机，这里使用node1）</h2><h3 id="安装和配置Nginx"><a href="#安装和配置Nginx" class="headerlink" title="安装和配置Nginx"></a>安装和配置Nginx</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx -y</span><br><span class="line">sudo systemctl start nginx</span><br><span class="line">sudo systemctl enable nginx</span><br></pre></td></tr></table></figure>
+<p><img src="/../photo/%E9%85%8D%E7%BD%AEnginx.png"></p>
+<h3 id="创建站点目录"><a href="#创建站点目录" class="headerlink" title="创建站点目录"></a>创建站点目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /var/www/blog</span><br><span class="line">sudo chown -R $USER:$USER /var/www/blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建Nginx配置-sudo-nano-etc-nginx-sites-available-blog"><a href="#创建Nginx配置-sudo-nano-etc-nginx-sites-available-blog" class="headerlink" title="创建Nginx配置: sudo nano /etc/nginx/sites-available/blog"></a>创建Nginx配置: <code>sudo nano /etc/nginx/sites-available/blog</code></h3><ul>
+<li>写入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name _;</span><br><span class="line">    root /var/www/blog;</span><br><span class="line">    index index.html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/../photo/%E5%86%99%E5%85%A5nginx.png"></li>
+</ul>
+<h3 id="启用站点"><a href="#启用站点" class="headerlink" title="启用站点"></a>启用站点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/</span><br><span class="line">sudo nginx -t</span><br><span class="line">sudo systemctl reload nginx</span><br></pre></td></tr></table></figure>
+<p><img src="/../photo/%E5%90%AF%E7%94%A8%E7%AB%99%E7%82%B9.png"></p>
+<h2 id="使用rsync部署"><a href="#使用rsync部署" class="headerlink" title="使用rsync部署"></a>使用rsync部署</h2><h3 id="在本地生成静态文件"><a href="#在本地生成静态文件" class="headerlink" title="在本地生成静态文件"></a>在本地生成静态文件</h3><p><img src="/../photo/%E6%9C%AC%E5%9C%B0%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6.png"></p>
+<h3 id="同步到服务器"><a href="#同步到服务器" class="headerlink" title="同步到服务器"></a>同步到服务器</h3><p><code>scp -r public/* misaka@192.168.56.102:/var/www/blog/</code></p>
+<ul>
+<li>因为gitb bash不支持rsync<br><img src="/../photo/%E5%90%8C%E6%AD%A5.png"></li>
+</ul>
+<h2 id="查看部署结果"><a href="#查看部署结果" class="headerlink" title="查看部署结果"></a>查看部署结果</h2><p><img src="/../photo/%E9%83%A8%E7%BD%B2%E7%BB%93%E6%9E%9C.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/photo/%E5%AE%9E%E9%AA%8C6-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html" data-id="cmrhqkrc70005xchsgef42u1u" data-title="实验六：软件部署" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">July 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

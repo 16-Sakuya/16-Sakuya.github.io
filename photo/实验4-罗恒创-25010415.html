@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>实验四：Linux基本操作 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="实验目标 熟悉基本的Linux指令 使用命令行进行Linux系统的基础操作 了解和简单管理常用系统配置文件（ &#x2F;etc&#x2F;passwd 、 &#x2F;etc&#x2F;group 、 &#x2F;etc&#x2F;profile 等） 了解和简单管理用户配置文件（ ~&#x2F;.bashrc 、 ~&#x2F;.profile 等） 掌握环境变量的查看、设置与管理方法  系统">
+<meta property="og:type" content="website">
+<meta property="og:title" content="实验四：Linux基本操作">
+<meta property="og:url" content="http://example.com/photo/%E5%AE%9E%E9%AA%8C4-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="实验目标 熟悉基本的Linux指令 使用命令行进行Linux系统的基础操作 了解和简单管理常用系统配置文件（ &#x2F;etc&#x2F;passwd 、 &#x2F;etc&#x2F;group 、 &#x2F;etc&#x2F;profile 等） 了解和简单管理用户配置文件（ ~&#x2F;.bashrc 、 ~&#x2F;.profile 等） 掌握环境变量的查看、设置与管理方法  系统">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/photo/%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F1.png">
+<meta property="og:image" content="http://example.com/photo/%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F2.png">
+<meta property="og:image" content="http://example.com/photo/etc1.png">
+<meta property="og:image" content="http://example.com/photo/etc2.png">
+<meta property="og:image" content="http://example.com/photo/etc3.png">
+<meta property="og:image" content="http://example.com/photo/etc4.png">
+<meta property="og:image" content="http://example.com/photo/%E7%94%A8%E6%88%B71.png">
+<meta property="og:image" content="http://example.com/photo/%E7%94%A8%E6%88%B72.png">
+<meta property="og:image" content="http://example.com/photo/%E6%9D%83%E9%99%90%E6%95%B0%E5%AD%97.png">
+<meta property="og:image" content="http://example.com/photo/chmod1.png">
+<meta property="og:image" content="http://example.com/photo/chmod2.png">
+<meta property="og:image" content="http://example.com/photo/env.png">
+<meta property="og:image" content="http://example.com/photo/echo.png">
+<meta property="og:image" content="http://example.com/photo/%E5%8F%98%E9%87%8F.png">
+<meta property="og:image" content="http://example.com/photo/%E8%A1%A8%E6%A0%BC.png">
+<meta property="og:image" content="http://example.com/photo/%E7%94%A8%E6%88%B7.png">
+<meta property="og:image" content="http://example.com/photo/%E7%B3%BB%E7%BB%9F.png">
+<meta property="article:published_time" content="2026-07-11T15:37:44.000Z">
+<meta property="article:modified_time" content="2026-07-12T06:48:08.953Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/photo/%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/photo/%E5%AE%9E%E9%AA%8C4-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html" class="article-date">
+  <time class="dt-published" datetime="2026-07-11T15:37:44.000Z" itemprop="datePublished">2026-07-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      实验四：Linux基本操作
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="实验目标"><a href="#实验目标" class="headerlink" title="实验目标"></a>实验目标</h2><ul>
+<li>熟悉基本的Linux指令</li>
+<li>使用命令行进行Linux系统的基础操作</li>
+<li>了解和简单管理常用系统配置文件（ &#x2F;etc&#x2F;passwd 、 &#x2F;etc&#x2F;group 、 &#x2F;etc&#x2F;profile 等）</li>
+<li>了解和简单管理用户配置文件（ ~&#x2F;.bashrc 、 ~&#x2F;.profile 等）</li>
+<li>掌握环境变量的查看、设置与管理方法</li>
+</ul>
+<h2 id="系统基础操作"><a href="#系统基础操作" class="headerlink" title="系统基础操作"></a>系统基础操作</h2><h3 id="登录与查看信息"><a href="#登录与查看信息" class="headerlink" title="登录与查看信息"></a>登录与查看信息</h3><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">whoami              # 查看当前用户</span><br><span class="line">uname -a            # 查看内核与架构信息</span><br><span class="line">lsb_release -a      # 查看Ubuntu版本</span><br><span class="line">hostname            # 查看主机名</span><br><span class="line">pwd                 # 查看当前工作目录</span><br></pre></td></tr></table></figure>
+![](../photo/登录.png)
+</code></pre>
+<h3 id="文件与目录的基本操作"><a href="#文件与目录的基本操作" class="headerlink" title="文件与目录的基本操作"></a>文件与目录的基本操作</h3><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ls -lh                              # 列出文件（详细信息，易读大小）</span><br><span class="line">cd ~                                # 切换到主目录</span><br><span class="line">mkdir test_dir                      # 创建目录</span><br><span class="line">touch 文件名                      # 创建空文件</span><br><span class="line">cp 文件名 test_copy.txt           # 复制文件</span><br><span class="line">mv 文件名 /tmp/                   # 移动文件</span><br><span class="line">rm -f 文件名                      # 删除文件</span><br></pre></td></tr></table></figure>
+![](../photo/文件.png)
+</code></pre>
+<h3 id="查看系统资源状态"><a href="#查看系统资源状态" class="headerlink" title="查看系统资源状态"></a>查看系统资源状态</h3>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">free -h     # 查看内存使用</span><br><span class="line">df -h       # 查看磁盘使用</span><br><span class="line">top         # 查看进程和资源占用（按q退出）</span><br><span class="line">du -sh *    # 查看当前目录下各子目录的大小</span><br></pre></td></tr></table></figure>
+<p>  <img src="/../photo/%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F1.png"><br>  <img src="/../photo/%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F2.png"></p>
+<h3 id="查看用户与组配置文件"><a href="#查看用户与组配置文件" class="headerlink" title="查看用户与组配置文件"></a>查看用户与组配置文件</h3>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd         # 用户账户信息</span><br><span class="line">sudo cat /etc/shadow    # 加密密码信息（仅root可读）</span><br><span class="line">cat /etc/group          # 用户组信息</span><br><span class="line">id                      # 查看当前用户ID信息</span><br></pre></td></tr></table></figure>
+<p>  <img src="/../photo/etc1.png"><br>  <img src="/../photo/etc2.png"><br>  <img src="/../photo/etc3.png"><br>  <img src="/../photo/etc4.png"></p>
+<h3 id="创建和管理用户"><a href="#创建和管理用户" class="headerlink" title="创建和管理用户"></a>创建和管理用户</h3>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser 用户名                               # 创建新用户</span><br><span class="line">sudo passwd 用户名                                # 设置密码</span><br><span class="line">sudo usermod -aG sudo 用户名                      # 赋予sudo权限</span><br><span class="line">groups 用户名                                     # 查看用户所属组</span><br><span class="line">su - 用户名                                       # 切换用户</span><br><span class="line">sudo deluser --remove-all-files 用户名           # 删除用户</span><br></pre></td></tr></table></figure>
+<p>  <img src="/../photo/%E7%94%A8%E6%88%B71.png"><br>  <img src="/../photo/%E7%94%A8%E6%88%B72.png"></p>
+<h3 id="文件权限管理"><a href="#文件权限管理" class="headerlink" title="文件权限管理"></a>文件权限管理</h3><p>  权限数字对照<br>  <img src="/../photo/%E6%9D%83%E9%99%90%E6%95%B0%E5%AD%97.png"><br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 文件名              # 数字法修改权限</span><br><span class="line">chmod u+x 文件名              # 符号法：所有者增加执行权限</span><br><span class="line">chmod g-w 文件名              # 符号法：去掉组的写权限</span><br><span class="line">sudo chown root:root 文件名   # 修改所有者和组</span><br><span class="line">sudo chgrp www-data 文件名    # 仅修改所属组</span><br></pre></td></tr></table></figure><br>  <img src="/../photo/chmod1.png"><br>  <img src="/../photo/chmod2.png"></p>
+<h3 id="查看环境变量"><a href="#查看环境变量" class="headerlink" title="查看环境变量"></a>查看环境变量</h3>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">env # 查看所有环境变量</span><br><span class="line">echo $PATH # 查看PATH变量</span><br><span class="line">echo $HOME # 查看主目录</span><br><span class="line">echo $USER # 查看当前用户名</span><br></pre></td></tr></table></figure>
+<p>  <img src="/../photo/env.png"><br>  <img src="/../photo/echo.png"></p>
+<h3 id="临时设置环境变量"><a href="#临时设置环境变量" class="headerlink" title="临时设置环境变量"></a>临时设置环境变量</h3>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/home/dev/mybin   # 临时添加PATH</span><br><span class="line">export 变量名=值                     # 临时创建变量</span><br><span class="line">echo $变量名                         # 验证</span><br><span class="line">unset 变量名                         # 删除变量</span><br></pre></td></tr></table></figure>
+<p>  <img src="/../photo/%E5%8F%98%E9%87%8F.png"></p>
+<h3 id="永久设置环境变量-用户"><a href="#永久设置环境变量-用户" class="headerlink" title="永久设置环境变量(用户)"></a>永久设置环境变量(用户)</h3><p>  <img src="/../photo/%E8%A1%A8%E6%A0%BC.png"></p>
+<ul>
+<li>编辑~&#x2F;.bashrc：<code>nano ~/.bashrc</code></li>
+<li>在末尾添加:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/home/dev/mybin</span><br><span class="line">export MY_CUSTOM_VAR=&quot;自定义变量&quot;</span><br><span class="line">alias ll=&#x27;ls -alF&#x27;</span><br></pre></td></tr></table></figure></li>
+<li>保存后生效：<code>source ~/.bashrc</code><br><img src="/../photo/%E7%94%A8%E6%88%B7.png"></li>
+</ul>
+<h3 id="永久设置环境变量-系统"><a href="#永久设置环境变量-系统" class="headerlink" title="永久设置环境变量(系统)"></a>永久设置环境变量(系统)</h3><p>  <code>sudo nano /etc/profile.d/myenv.sh</code></p>
+<ul>
+<li>添加：<code>export MY_GLOBAL_VAR=&quot;全局变量&quot;</code></li>
+</ul>
+<p>  <code>source /etc/profile.d/myenv.sh</code><br>  <img src="/../photo/%E7%B3%BB%E7%BB%9F.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/photo/%E5%AE%9E%E9%AA%8C4-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html" data-id="cmrhqkrc50001xchsbbpj5gh4" data-title="实验四：Linux基本操作" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">July 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

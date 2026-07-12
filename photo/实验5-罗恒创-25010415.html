@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>实验五：远程管理 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="实验目标 安装和配置OpenSSH服务，实现多机之间的远程登录管理 配置SSH密钥认证，实现免密登录 了解多机开发环境下的账户管理方法 掌握使用SCP和rsync进行跨机文件传输与同步  实验环境 上一实验的两台虚拟机(node1, node2)，且处于同一Host-Only网络  检查SSH服务状态  123sudo systemctl status ssh                 #">
+<meta property="og:type" content="website">
+<meta property="og:title" content="实验五：远程管理">
+<meta property="og:url" content="http://example.com/photo/%E5%AE%9E%E9%AA%8C5-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="实验目标 安装和配置OpenSSH服务，实现多机之间的远程登录管理 配置SSH密钥认证，实现免密登录 了解多机开发环境下的账户管理方法 掌握使用SCP和rsync进行跨机文件传输与同步  实验环境 上一实验的两台虚拟机(node1, node2)，且处于同一Host-Only网络  检查SSH服务状态  123sudo systemctl status ssh                 #">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/photo/%E6%A3%80%E6%9F%A5.png">
+<meta property="og:image" content="http://example.com/photo/%E7%94%9F%E6%88%90SSH.png">
+<meta property="og:image" content="http://example.com/photo/%E6%B5%8B%E8%AF%95%E5%85%8D%E5%AF%86.png">
+<meta property="og:image" content="http://example.com/photo/%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6.png">
+<meta property="og:image" content="http://example.com/photo/%E4%B8%8B%E8%BD%BD%E7%9B%AE%E5%BD%95.png">
+<meta property="og:image" content="http://example.com/photo/node1%E6%8E%A8%E9%80%81.png">
+<meta property="og:image" content="http://example.com/photo/node2%E8%8E%B7%E5%8F%96.png">
+<meta property="article:published_time" content="2026-07-12T06:51:01.000Z">
+<meta property="article:modified_time" content="2026-07-12T09:31:15.493Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/photo/%E6%A3%80%E6%9F%A5.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/photo/%E5%AE%9E%E9%AA%8C5-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html" class="article-date">
+  <time class="dt-published" datetime="2026-07-12T06:51:01.000Z" itemprop="datePublished">2026-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      实验五：远程管理
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="实验目标"><a href="#实验目标" class="headerlink" title="实验目标"></a>实验目标</h2><ul>
+<li>安装和配置OpenSSH服务，实现多机之间的远程登录管理</li>
+<li>配置SSH密钥认证，实现免密登录</li>
+<li>了解多机开发环境下的账户管理方法</li>
+<li>掌握使用SCP和rsync进行跨机文件传输与同步</li>
+</ul>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>上一实验的两台虚拟机(node1, node2)，且处于同一Host-Only网络</li>
+</ul>
+<h2 id="检查SSH服务状态"><a href="#检查SSH服务状态" class="headerlink" title="检查SSH服务状态"></a>检查SSH服务状态</h2>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status ssh                 # 检查服务状态</span><br><span class="line">sudo apt install openssh-server -y        # 如未安装</span><br><span class="line">sudo systemctl enable ssh                 # 设置开机自启</span><br></pre></td></tr></table></figure>
+<p>  <img src="/../photo/%E6%A3%80%E6%9F%A5.png"></p>
+<h2 id="配置SSH服务器"><a href="#配置SSH服务器" class="headerlink" title="配置SSH服务器"></a>配置SSH服务器</h2><ul>
+<li>编辑&#x2F;etc&#x2F;ssh&#x2F;sshd_config<br><code>sudo nano /etc/ssh/sshd_config</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Port 22                       # 默认端口</span><br><span class="line">PermitRootLogin no              # 禁止root直接登录</span><br><span class="line">PubkeyAuthentication yes        # 允许公钥认证</span><br><span class="line">PasswordAuthentication yes      # 允许密码认证</span><br></pre></td></tr></table></figure></li>
+<li>重启服务：<code>sudo systemctl restart ssh</code></li>
+</ul>
+<h2 id="生成SSH密钥对（node1）"><a href="#生成SSH密钥对（node1）" class="headerlink" title="生成SSH密钥对（node1）"></a>生成SSH密钥对（node1）</h2><p>  <code>ssh-keygen -t ed25519 -C &quot;邮箱&quot;</code></p>
+<ul>
+<li>生成后查看<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls ~/.ssh/</span><br><span class="line"># id_ed25519（私钥） 和 id_ed25519.pub（公钥）</span><br></pre></td></tr></table></figure>
+<img src="/../photo/%E7%94%9F%E6%88%90SSH.png"></li>
+</ul>
+<h2 id="将公钥复制到远程服务器"><a href="#将公钥复制到远程服务器" class="headerlink" title="将公钥复制到远程服务器"></a>将公钥复制到远程服务器</h2><p>  <code>ssh-copy-id misaka@192.168.56.103</code></p>
+<ul>
+<li><em><a href="mailto:&#x6d;&#105;&#115;&#97;&#x6b;&#x61;&#64;&#49;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#x2e;&#x35;&#x36;&#46;&#x31;&#x30;&#51;">&#x6d;&#105;&#115;&#97;&#x6b;&#x61;&#64;&#49;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#x2e;&#x35;&#x36;&#46;&#x31;&#x30;&#51;</a></em>是node2</li>
+</ul>
+<h2 id="测试免密登录：ssh-misaka-192-168-56-103"><a href="#测试免密登录：ssh-misaka-192-168-56-103" class="headerlink" title="测试免密登录：ssh misaka@192.168.56.103"></a>测试免密登录：<code>ssh misaka@192.168.56.103</code></h2><p>  <img src="/../photo/%E6%B5%8B%E8%AF%95%E5%85%8D%E5%AF%86.png"></p>
+<h2 id="使用SCP传输文件"><a href="#使用SCP传输文件" class="headerlink" title="使用SCP传输文件"></a>使用SCP传输文件</h2><ul>
+<li><code>exit</code>回到node1</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp /home/misaka/test.txt misaka@192.168.56.103:/home/misaka/          # 上传文件</span><br><span class="line">scp -r /home/misaka/project/ misaka@192.168.56.103:/home/misaka/       # 上传目录</span><br><span class="line">scp misaka@192.168.56.103:/home/misaka/log.txt ./                      # 下载文件</span><br><span class="line">scp -r misaka@192.168.56.103:/home/misaka/backup/ ./                   # 下载目录</span><br></pre></td></tr></table></figure>
+<p>  <img src="/../photo/%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6.png"><br>  <img src="/../photo/%E4%B8%8B%E8%BD%BD%E7%9B%AE%E5%BD%95.png"></p>
+<ul>
+<li>scp (-r) 上传的文件&#x2F;目录 远端服务器:下载到的目录</li>
+<li>scp (-r) 远端服务器:下载的文件&#x2F;目录</li>
+</ul>
+<h2 id="使用rsync同步文件"><a href="#使用rsync同步文件" class="headerlink" title="使用rsync同步文件"></a>使用rsync同步文件</h2><ul>
+<li>安装rsync：<code>sudo apt install rsync -y</code>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> rsync -avz 目录1 目录2                                                            # 本地同步</span><br><span class="line"> rsync -avz -e ssh 本地目录 远端:远端目录                                           # 推送到远程</span><br><span class="line"> rsync -avz -e ssh 远端:远端目录                                                   # 从远程拉取</span><br><span class="line"> rsync -avz --delete -e ssh 本地目录 远端:远端目录                                  # 保持完全一致（--delete会删除目标中多余的文件）</span><br><span class="line"></span><br><span class="line">rsync -avz --exclude=&#x27;*不上传的文件&#x27; --exclude=&#x27;不上传的文件夹&#x27; -e ssh 本地目录      # 排除特定文件</span><br><span class="line">远端:远端目录</span><br></pre></td></tr></table></figure>
+  <img src="/../photo/node1%E6%8E%A8%E9%80%81.png"><br>  <img src="/../photo/node2%E8%8E%B7%E5%8F%96.png"></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/photo/%E5%AE%9E%E9%AA%8C5-%E7%BD%97%E6%81%92%E5%88%9B-25010415.html" data-id="cmrhqkrc70003xchsa0avdmoo" data-title="实验五：远程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">July 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/07/10/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
